@@ -1,26 +1,8 @@
-#!name= Unlock Apple News without SIM Card Detect
-#!desc=Unlock Apple News without SIM Card Detect
-[Rule]
-# > Apple News 
-PROCESS-NAME,News,PROXY
-PROCESS-NAME,/System/Applications/News.app/Contents/MacOS/News,PROXY
-PROCESS-NAME,NewsTag,PROXY
-PROCESS-NAME,/System/Applications/News.app/Contents/PlugIns/NewsTag.appex/Contents/MacOS/NewsTag,PROXY
-PROCESS-NAME,NewsToday2,PROXY
-PROCESS-NAME,/System/Applications/News.app/Contents/PlugIns/NewsToday2.appex/Contents/MacOS/NewsToday2,PROXY
-PROCESS-NAME,NewsTodayIntents,PROXY
-PROCESS-NAME,/System/Applications/News.app/Contents/PlugIns/NewsTodayIntents.appex/Contents/MacOS/NewsTodayIntents,PROXY
-USER-AGENT,AppleNews*,PROXY
-DOMAIN,news-assets.apple.com,PROXY
-DOMAIN,news-client.apple.com,PROXY
-DOMAIN,news-edge.apple.com,PROXY
-DOMAIN,news-events.apple.com,PROXY
-DOMAIN,apple.comscoreresearch.com,PROXY
+#!name= Unlock Apple News 🇺🇸US
+#!desc=解锁🇺🇸US地区的News，注：使用过程中gateway.icloud.com需走代理线路。
 
-[URL Rewrite]
-# Redirect GeoServices
-(^https?:\/\/gspe\d*-ssl\.ls\.apple\.)(com|cn)(\/.*)(country_code=[A-Z]{2})(.*) $1$2$3country_code=HK$5 header
+[Script]
+http-request ^https?:\/\/news-(edge|events)\.apple\.com(\/v1\/configs|\/analyticseventsv2\/async) script-path=https://raw.githubusercontent.com/VirgilClyne/iRingo/main/js/Apple_News.js, requires-body=true, timeout=10, tag=Apple_News
 
 [MITM]
-hostname = %APPEND% gspe35-ssl.ls.apple.com
-
+hostname = %APPEND% news-client.apple.com, news-edge.apple.com, news-events.apple.com, newsletter-edge.apple.com
